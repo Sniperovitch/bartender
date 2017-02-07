@@ -13,8 +13,14 @@ get '/shake' => sub {
     my $opt_garde  = $param{projetPadGarde};
     my $opt_projet = $param{projetId};
     my $cocktail = config->{cocktail}{binary};
-    die unless -x $cocktail;
-
+    if(not defined $cocktail) {
+        warn "cocktail:binary n'est pas configuré dans config.yml";
+        return;
+    }
+    elsif(not -x $cocktail) {
+        warn "cocktail$cocktail n'est pas executable";
+        return;
+    }
     system("$cocktail -d $opt_dossier -b '$opt_base' -g '$opt_garde' -p $opt_projet &");
     redirect request->referer;
 };
