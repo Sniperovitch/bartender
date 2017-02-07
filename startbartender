@@ -1,2 +1,2 @@
 #!/bin/sh
-plackup --daemonize --host 127.0.0.1 --port 5000 --reload &
+plackup --daemonize --host 127.0.0.1 --port 5000 --reload bin/app.psgi &
