@@ -5,20 +5,10 @@ use POSIX ();
 
 our $VERSION = '0.1';
 
-get '/' => sub {
-    send_file '/index.html';
-};
+#get '/' => sub {
+#    send_file '/index.html';
+#};
 
-
-=pod
-$VAR1 = {
-          'projetId' => 'abro-tele2',
-          'projetPadPrincipal' => 'https://pad.exegetes.eu.org/p/g.DSXI1kGFT1gjor66$Abro-REP-Tele2-Principal/export/txt',
-          'projetPadGarde' => 'https://pad.exegetes.eu.org/p/g.DSXI1kGFT1gjor66$Abro-REP-Tele2-Garde/export/txt',
-          'projetPadAutre1' => '',
-          'dossier' => 'abroretention'
-        };
-=cut
 
 get '/shake' => sub {
     my %param = params;
@@ -29,7 +19,8 @@ get '/shake' => sub {
     my $opt_projet = $param{projetId};
 
     system("/home/sniperovitch/cocktail/cocktail -d $opt_dossier -b '$opt_base' -g '$opt_garde' -p $opt_projet &");
-    send_file '/index.html';
+     redirect request-referer;
+#    send_file '/index.html';
 };
 
 
