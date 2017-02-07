@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr-fr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Exégètes - Presse à Citron</title>
+
+    <!-- Bootstrap -->
+    <!-- <link href="bootstrap3/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="style.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <h1 class="app titre">MA Abrogation Tele2</h1>
+
+    <div class="métadonnées">
+      <span class="heading">Dossier</span>
+      <a href="/abroretention/" class="dossier" id="abroretention">Abrogation rétention des données</a>
+    </div>
+
+    <div class="éditer">
+	<form action="shake" method="get">
+	<div class="form-group hidden">
+	    <label for="projetId">Identifiant:</label>
+	    <input type="text" class="form-control" id="projetId" name="projetId" value="abro-tele2" placeholder="">
+	</div>
+	<div class="form-group">
+	    <label for="projetPadPrincipal">Pad principal:</label>
+	    <input type="url" class="form-control" id="projetPadPrincipal" name="projetPadPrincipal" placeholder="https://pad.exegetes.eu.org/" value="https://pad.exegetes.eu.org/p/g.DSXI1kGFT1gjor66$Abro-REP-Tele2-Principal/export/txt">
+	</div>
+	<div class="form-group">
+	    <label for="projetPadGarde">Page de garde:</label>
+	    <input type="url" class="form-control" id="projetPadGarde" name="projetPadGarde" placeholder="https://pad.exegetes.eu.org/" value="https://pad.exegetes.eu.org/p/g.DSXI1kGFT1gjor66$Abro-REP-Tele2-Garde/export/txt">
+	</div>
+	<div class="form-group">
+	    <label for="projetPadAutre1">Autre pad: <a href="#">Ajouter</a></label>
+	    <input type="url" class="form-control hidden" id="projetPadAutre1" name="projetPadAutre1" placeholder="https://pad.exegetes.eu.org/">
+	</div>
+	<div class="form-group hidden">
+	    <label for="projetDossier">Dossier: <a href="ajout-dossier.html">(Nouveau dossier ?)</a></label>
+	    <select name="dossier" id="dossiers" multiple="" class="form-control input-lg select2 select2-offscreen" tabindex="-1">
+		<option value="abroretention" selected="selected">Abrogation de la rétention des données</option>
+		<option value="tes">Fichier TES</option>
+		<option value="orangefail">#OrangeFail</option>
+		<option value="prishield">Privacy Shield</option>
+	    </select>
+	</div>
+	<div class="actions"> 
+	    <button type="submit" class="bouton presse">Presser</button>
+	</div>
+	</form>
+    </div>
+
+    <div class="ressources">
+    <h3>Télécharger</h3>
+      <a class="pdf" href="http://citron.exegetes.eu.org/abroretention/abro-tele2.pdf">PDF</a>
+      <a class="docx" href="http://citron.exegetes.eu.org/abroretention/abro-tele2.docx">Docx</a>
+      <a class="html5" href="http://citron.exegetes.eu.org/abroretention/abro-tele2.html">HTML</a>
+      <a class="txt" href="http://citron.exegetes.eu.org/abroretention/abro-tele2.txt">Texte</a>
+    </div>
+    <div id="statusmsg"></div>
+
+
+    <nav class="projets dossiers">
+      <span class="heading">Projets</span>
+      <a href="/replique-premierministre-csi.html">Réplique Premier Ministre CSI</a>
+      <a href="/abro-tele2.html" class="selected">MA Abrogation Tele2</a>
+      <a href="/index.html" class="vers-index">Revenir à l'index des dossiers</a>
+    </nav>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    jQuery.get('/api/v1/status?dossier=abroretention', function(data) {
+        console.log(data);
+        $("#statusmsg").html(data["text"]);
+    });
+});
+</script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bootstrap3/js/bootstrap.min.js"></script>
+  </body>
+</html>
