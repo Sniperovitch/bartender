@@ -12,7 +12,7 @@ get '/shake' => sub {
     my $opt_base   = $param{projetPadPrincipal};
     my $opt_garde  = $param{projetPadGarde};
     my $opt_projet = $param{projetId};
-    my $cocktail = config->{cocktail}{bin};
+    my $cocktail = config->{cocktail}{binary};
     die unless -x $cocktail;
 
     system("$cocktail -d $opt_dossier -b '$opt_base' -g '$opt_garde' -p $opt_projet &");
