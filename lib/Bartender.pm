@@ -15,11 +15,11 @@ get '/shake' => sub {
     my $cocktail = config->{cocktail}{binary};
     if(not defined $cocktail) {
         my $error->{message} = "cocktail:binary n'est pas configuré dans config.yml";
-        template 'error', $error;
+        return template 'error', $error;
     }
     elsif(not -x $cocktail) {
         my $error->{message} = "cocktail$cocktail n'est pas executable";
-        template 'error', $error;
+        return template 'error', $error;
     }
     system("$cocktail -d $opt_dossier -b '$opt_base' -g '$opt_garde' -p $opt_projet &");
     redirect request->referer;
