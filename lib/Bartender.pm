@@ -7,21 +7,38 @@ our $VERSION = '0.1';
 
 get '/shake' => sub {
     my %param = params;
+    my $error = {};
 
     my $opt_dossier = $param{dossier};
-    my $opt_base   = $param{projetPadPrincipal};
-    my $opt_garde  = $param{projetPadGarde};
-    my $opt_projet = $param{projetId};
-    my $cocktail   = config->{cocktail}{binary};
-    if(not defined $cocktail) {
-        my $error->{message} = qq{"cocktail:binary" n'est pas configuré dans config.yml};
-        return template 'error', $error;
+    my $opt_base    = $param{projetPadPrincipal};
+    my $opt_garde   = $param{projetPadGarde};
+    my $opt_projet  = $param{projetId};
+
+    for($opt_dossier, $opt_projet) {
+        if( m{[^a-zA-Z0-9_-]} ) {
+            $error->{message} .= qq{"$_" est incorrect.};
+        }
     }
-    elsif(not -x $cocktail) {
-        my $error->{message} = qq{cocktail: "$cocktail" n'est pas executable};
-        return template 'error', $error;
+
+    for($opt_base, $opt_garde) {
+        if(not m{^https?://}i ) {
+            $error->{message} .= qq{"$_" est incorrect.};
+        }
     }
-    system("$cocktail -d $opt_dossier -b '$opt_base' -g '$opt_garde' -p $opt_projet &");
+
+    my $cocktail_binary = config->{cocktail}{binary};
+    if(not defined $cocktail_binary) {
+        $error->{message} .= qq{"cocktail:binary" n'est pas configuré dans config.yml};
+    }
+    elsif(not -x $cocktail_binary) {
+        $error->{message} .= qq{"cocktail:binary" "$cocktail_binary" n'est pas executable};
+    }
+
+    if($error->{message}) {
+        return templare 'error', $error;
+    }
+
+    system("$cocktail_binary -d $opt_dossier -b '$opt_base' -g '$opt_garde' -p $opt_projet &");
     redirect request->referer;
 };
 
