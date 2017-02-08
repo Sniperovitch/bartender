@@ -35,7 +35,7 @@ get '/shake' => sub {
     }
 
     if($error->{message}) {
-        return templare 'error', $error;
+        return template 'error', $error;
     }
 
     system("$cocktail_binary -d $opt_dossier -b '$opt_base' -g '$opt_garde' -p $opt_projet &");
