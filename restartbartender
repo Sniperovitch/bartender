@@ -1,2 +1,2 @@
 #!/bin/sh
-killall bartender && plackup --daemonize --host 127.0.0.1 --port 5000 --reload bin/bartender.psgi &
+killall plackup; ./startbartender
