@@ -49,7 +49,18 @@ get '/status' => sub {
     my $opt_projet  = $param{projetId};
 
     my $cocktail_store = config->{cocktail}{store};
-    die unless -d $cocktail_store;
+    if(not -d $cocktail_store) {
+        $error->{message} .= qq{"cocktail:store" n'est pas configuré dans config.yml};
+    }
+
+    if(not defined $opt_projet) {
+        $error->{message} .= qq{arg:projetId est incorrect};
+    }
+
+    if($error->{message}) {
+        return template 'error', $error;
+    }
+
     my $compilation_status;
     if(-e "$cocktail_store/$opt_dossier/$opt_projet.lock") {
         $compilation_status = "En cours de compilation...";
