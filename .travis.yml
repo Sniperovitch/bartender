@@ -1,12 +1,7 @@
 language: perl
 perl:
-  - "5.20"
-  - "5.22"
   - "5.24"
 before_install:
   - "cpanm Dancer2"
 notifications:
-  branches:
-    only:
-      - master
   irc: "chat.freenode.net#pressecitron"
