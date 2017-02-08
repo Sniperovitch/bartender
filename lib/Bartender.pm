@@ -21,7 +21,7 @@ get '/shake' => sub {
     }
 
     for($opt_base, $opt_garde) {
-        if(not m{^https?://pad\.exegetes\.eu\.org/p/[.a-zA-Z$-/]+$}i ) {
+        if(not m{^https?://pad\.exegetes\.eu\.org/p/[.a-z0-9A-Z$-/]+$}i ) {
             $error->{message} .= qq{"$_" est incorrect.};
         }
     }
