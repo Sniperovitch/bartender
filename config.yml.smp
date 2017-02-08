@@ -1,0 +1,5 @@
+cocktail:
+  binary: /home/bernard/cocktail/cocktail
+  store: /tmp/bernard
+
+template: "simple"
