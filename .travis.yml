@@ -9,3 +9,5 @@ before_install:
 cache:
   directories:
   - $HOME/perl5
+notifications:
+  irc: "chat.freenode.net#pressecitron"
