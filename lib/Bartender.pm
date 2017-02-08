@@ -45,6 +45,7 @@ get '/shake' => sub {
 
 get '/status' => sub {
     my %param = params;
+    my $error = {};
     my $opt_dossier = $param{dossier};
     my $opt_projet  = $param{projetId};
 
