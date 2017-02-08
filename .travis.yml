@@ -4,10 +4,9 @@ perl:
   - "5.22"
   - "5.24"
 before_install:
-  - "git clone https://github.com/sniperovitch/cocktail.git"
   - "cpanm Dancer2"
-cache:
-  directories:
-  - $HOME/perl5
 notifications:
+  branches:
+    only:
+      - master
   irc: "chat.freenode.net#pressecitron"
