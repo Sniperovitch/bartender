@@ -1,5 +1,7 @@
+appname: Bartender
+
 cocktail:
-  binary: /home/bernard/cocktail/cocktail
-  store: /tmp/bernard
+  binary: $HOME/cocktail/cocktail
+  store: $HOME/store
 
 template: "simple"
