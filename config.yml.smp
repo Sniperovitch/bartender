@@ -1,7 +1,7 @@
 appname: Bartender
 
 cocktail:
-  binary: $HOME/cocktail/cocktail
-  store: $HOME/store
+  binary: /home/sniperovitch/cocktail/cocktail
+  store: /home/sniperovitch/store
 
 template: "simple"
