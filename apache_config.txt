@@ -1,6 +1,6 @@
 a2enmod proxy
 a2enmod proxy_http
 
-ProxyPass /bartender http://localhost:5000/
+ProxyPass /bartender http://localhost:5000
 ProxyPassReverse / http://localhost:5000/
 
