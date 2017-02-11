@@ -4,6 +4,11 @@ use Data::Dumper;
 use POSIX ();
 
 our $VERSION = '0.1';
+die "config.yml not loaded" unless defined config->{appname};
+
+get '/' => sub {
+    return "Welcome on " . config->{appname};
+};
 
 get '/shake' => sub {
     my %param = params;
@@ -50,7 +55,7 @@ get '/status' => sub {
     my $opt_projet  = $param{projetId};
 
     my $cocktail_store = config->{cocktail}{store};
-    if(not -d $cocktail_store) {
+    if(not defined $cocktail_store) {
         $error->{message} .= qq{"cocktail:store" n'est pas configuré dans config.yml};
     }
 
@@ -62,23 +67,38 @@ get '/status' => sub {
         return template 'error', $error;
     }
 
-    my $compilation_status;
-    if(-e "$cocktail_store/$opt_dossier/$opt_projet.lock") {
-        $compilation_status = "En cours de compilation...";
+    my $lock_filename = "$cocktail_store/$opt_dossier/$opt_projet.lock";
+    my $pdf_filename  = "$cocktail_store/$opt_dossier/$opt_projet.pdf";
+
+    my ($compilation_status, $compilation_text);
+    if(-e $lock_filename) {
+        my $date_time = _get_datetime_for($lock_filename);
+        $compilation_text = "En cours de compilation depuis $date_time";
+        $compilation_status = 'IN PROGRESS';
     }
-    elsif(-e "$cocktail_store/$opt_dossier/$opt_projet.pdf") {
-        my @stat = stat "$cocktail_store/$opt_dossier/$opt_projet.pdf";
-        my $ctime = $stat[10];
-        my $date_time = POSIX::strftime("%Y-%m-%d %H:%M:%S", localtime($ctime) );
-        $compilation_status = $date_time;
+    elsif(-e $pdf_filename) {
+        my $date_time = _get_datetime_for($pdf_filename);
+        $compilation_text = $date_time;
+        $compilation_status = 'COMPLETED';
     }
     else {
-        $compilation_status = "Aucune compilation.";
+        $compilation_text = "Aucune compilation.";
+        $compilation_status = 'NONE';
     }
 
     header 'Content-Type' => 'application/json';
-    return to_json { text => $compilation_status };
+    return to_json { text => $compilation_text, status => $compilation_status };
 };
 
+sub _get_datetime_for {
+    my $filename = shift;
+    return unless -e $filename;
+
+    my @stat = stat $filename;
+    my $ctime = $stat[10];
+    my $date_time = POSIX::strftime("%Y-%m-%d %H:%M:%S", localtime($ctime) );
+    return $date_time;
+}
 
 true;
+

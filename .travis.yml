@@ -3,5 +3,6 @@ perl:
   - "5.24"
 before_install:
   - "cpanm Dancer2"
+  - "cp -v config.yml.smp config.yml"
 notifications:
   irc: "chat.freenode.net#pressecitron"
