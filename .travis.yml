@@ -1,8 +1,9 @@
 language: perl
 perl:
+  - "5.22"
   - "5.24"
 before_install:
-  - "cpanm Dancer2"
+  - "cpanm Dancer2 URI::Encode"
   - "cp -v config.yml.smp config.yml"
 notifications:
   irc: "chat.freenode.net#pressecitron"
