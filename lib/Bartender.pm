@@ -2,6 +2,7 @@ package Bartender;
 use Dancer2;
 use Data::Dumper;
 use POSIX ();
+use URI::Encode ();
 
 our $VERSION = '0.1';
 die "config.yml not loaded" unless defined config->{appname};
@@ -26,7 +27,7 @@ get '/shake' => sub {
     }
 
     for($opt_base, $opt_garde) {
-        if(not m/^https?:\/\/pad\.exegetes\.eu\.org\/p\//i ) {
+        if(not m/^https?:\/\/pad\.exegetes\.eu\.org\/(?:p|group\.html\/\d+\/pad\.html)\/g\./i ) {
             $error->{message} .= qq{"$_" est incorrect.};
         }
     }
@@ -43,6 +44,12 @@ get '/shake' => sub {
         return template 'error', $error;
     }
 
+    my $uri_encode_opts = {
+        encode_reserved => 1,
+        double_encode   => 0,
+    };
+    $opt_base  = URI::Encode::uri_encode($opt_base,  $uri_encode_opts);
+    $opt_garde = URI::Encode::uri_encode($opt_garde, $uri_encode_opts);
     system("$cocktail_binary -d $opt_dossier -b '$opt_base' -g '$opt_garde' -p $opt_projet &");
     redirect request->referer;
 };
